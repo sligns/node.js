@@ -1,0 +1,10 @@
+doctype
+html
+    head
+        meta(charset="utf-8")
+        title=news.title
+    body&attributes({"style":"background:pink;opacity:0.7;"})
+     div&attributes({"style":"width:500px;margin:0 auto;"})
+        div&attributes({"style":"font-weight:bold;"}) 作者：#{news.author}
+        div&attributes({"style":"color:red"}) 时间：#{news.times}
+        div&attributes({"style":"width:400px;background:#ccc;margin;0 auto;"})=news.content
