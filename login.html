@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+				list-style: none;
+				border:none;
+				outline:none;
+			}
+			#box{
+				width:500px;
+				height:400px;
+				margin:50px auto;
+				background:url(img/login.jpg) center no-repeat;
+				background-size:100% 100%;
+				position:relative;
+				transform: translateY(-800px);
+				transition: 1s;
+			}
+			#user{
+				width:300px;
+				height:45px;
+				background:paleturquoise;
+				position:absolute;
+				top:20px;
+				left:100px;
+				text-align: center;
+			}
+			#pass{
+				width:300px;
+				height:45px;
+				background:paleturquoise;
+				position:absolute;
+				top:80px;
+				left:100px;
+				text-align: center;
+			}
+			#de{
+				top:150px;
+				left:170px;
+			}
+			#zhu{
+				top:150px;
+				right:140px;
+			}
+			span{
+				color:#666;
+				font-size:12px;
+				position: absolute;
+			}
+			#de,#zhu{
+				border-radius: 5px;
+				height:45px;
+				width:45px;
+				text-align: center;
+				position:absolute;
+				cursor: pointer;
+			}
+			button:hover{
+				background:#666;
+				color:#ccc;
+				
+			}
+			.s1{
+				top:210px;
+				left:130px;
+			}
+			.s2{
+				top:210px;
+				right:120px;
+			}
+			body{
+				background: url(img/bgg.jpg) no-repeat;
+				background-size:cover;
+			}
+			#begins{
+				width:400px;
+				height:100px;
+				cursor: pointer;
+				font-size:20px;
+				position: absolute;
+				top:250px;
+				left:40%;
+	
+			}
+		</style>
+	</head>
+
+	<body>
+		<button id='begins'>欢迎您来到此平台，发布自己的简历<br>请点击文字开始吧！</button>
+		<div id='box'>
+		<input type="text" id="user" placeholder="请输入用户名">
+		<br>
+		<input type="password" id="pass" placeholder="请输入密码">
+		<br>
+		<button id="de">登录</button>
+		<span  class='s1'>已有账号？请登录</span>
+		<button id="zhu">注册</button>
+		<span class="s2">没有账号？请注册</span>
+</div>
+	</body>
+	<script>
+		begins.onclick=function(){
+			begins.style.display='none';
+			box.style.transform='translateY(100px)'
+		}
+		zhu.onclick = function() {
+			ajax({
+				url: 'http://localhost:8000/user/zhuce',
+				type: 'post',
+				data: {
+					user: user.value,
+					pass: pass.value
+				},
+				success: function(da) {
+					alert(da)
+				},
+				error: function() {
+					console.log('失败')
+				}
+			})
+		}
+
+		de.onclick = function() {
+			ajax({
+				url: 'http://localhost:8000/user/denglu',
+				type: 'post',
+				data: {
+					user: user.value,
+					pass: pass.value
+				},
+				success: function(da) {
+						alert(da)
+				if(da=='登陆成功'){
+					document.location.href='http://localhost:8000/index1.html'
+				}
+					
+				},
+				error: function() {
+					console.log('失败')
+				}
+			})
+		}
+
+		function ajax(req) {
+			if(window.XMLHttpRequest) {
+				var ajax = new XMLHttpRequest()
+			} else {
+				var ajax = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			if(req.type == 'get') {
+				ajax.open('get', req.url + '?' + strdata(req.data), true)
+				ajax.send()
+			} else {
+				ajax.open('post', req.url, true)
+				ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+				ajax.send(strdata(req.data))
+			}
+			ajax.onreadystatechange = function() {
+				if(ajax.readyState == 4) {
+					if(ajax.status >= 200 && ajax.status < 300 || ajax.status == 304) {
+						req.success(ajax.responseText)
+						//					console.log(ajax.responseText)
+					} else {
+						req.error(ajax.status)
+					}
+
+				}
+			}
+
+			function strdata(da) {
+				var arr = []
+				for(var i in da) {
+					arr.push(i + '=' + da[i])
+				}
+				var strurl = arr.join('&')
+				return strurl
+			}
+		}
+	</script>
+
+</html>

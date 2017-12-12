@@ -1,0 +1,38 @@
+doctype html
+html(lang='en')
+    head
+        title
+    body
+        .box
+            #img
+            .inp
+                | 头像：
+                input#files(type='file')
+                br
+                | 		昵称：
+                p#names  #{arrs.name}
+                br
+                | 		性别：
+                form#sex(action='', method='post')
+                    label
+                        input(name='sex', type='radio')
+                        | 男
+                    label
+                        input(name='sex', type='radio')
+                        | 女
+                br
+                | 		地址：
+                input#ip(type='text')
+                br
+                | 		电话：
+                input#tel(type='text')
+                br
+                | 		邮箱：
+                input#email(type='text')
+                br
+                | 		Q Q：
+                input#qq(type='text')
+                br
+            span.ss 个人说明：
+            textarea#tas
+            button#btn 发布你的简历
